@@ -1,0 +1,131 @@
+/* app/components/menu.css */
+
+/* Overlay fills the layout and centers all orbits on the sun (layout center) */
+.solar-system {
+  position: absolute;
+  inset: 0;
+  z-index: 8; /* above stars, below <main class="z-10"> */
+  pointer-events: none; /* avoid blocking content; planets re-enable pointer events */
+}
+
+/* Orbits anchor to page center and spin */
+.orbit {
+  --r: 200px; /* default radius, overridden per planet */
+  --speed: 40s; /* default speed, overridden per planet */
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  animation: spin var(--speed) linear infinite;
+}
+
+/* Optional: faint orbit ring */
+.orbit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* Planet positioned at orbit radius (to the right), then carried around by rotation */
+.planet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateX(var(--r));
+  text-align: center;
+  pointer-events: auto;
+}
+
+/* Circle visual */
+.planet-circle {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+/* Label text */
+.planet-label {
+  display: block;
+  margin-top: 4px; /* place below the circle */
+  color: #fff;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  animation: counter-spin var(--speed) linear infinite;
+}
+
+/* Speeds and radii per planet */
+.mercury {
+  --r: min(18vw, 180px);
+  --speed: 36s;
+}
+.venus {
+  --r: min(21vw, 210px);
+  --speed: 40s;
+}
+.earth {
+  --r: min(25vw, 250px);
+  --speed: 44s;
+}
+.mars {
+  --r: min(29vw, 290px);
+  --speed: 48s;
+}
+.jupiter {
+  --r: min(34vw, 340px);
+  --speed: 54s;
+}
+
+/* Planet colors */
+.mercury .planet-circle {
+  background-image: url("/textures/mercury.webp");
+  width: 20px;
+  height: 20px;
+}
+.venus .planet-circle {
+  background-image: url("/textures/venus.webp");
+  width: 35px;
+  height: 35px;
+}
+.earth .planet-circle {
+  background-image: url("/textures/earth.webp");
+}
+.mars .planet-circle {
+  background-image: url("/textures/mars.webp");
+  width: 30px;
+  height: 30px;
+}
+.jupiter .planet-circle {
+  background-image: url("/textures/jupiter.webp");
+  width: 70px;
+  height: 70px;
+}
+
+/* Spin animation (orbit rotation around center) */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Counter rotation (opposite direction) */
+@keyframes counter-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
