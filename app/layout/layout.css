@@ -3,14 +3,20 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 180, 0.9) 0%,
-    /* sun core */ rgba(255, 200, 100, 0.5) 3%,
-    /* glow */ rgba(30, 20, 60, 0.9) 15%,
-    /* galaxy */ #03040d 100% /* space */
-  );
-  animation: pulse 8s ease-in-out infinite;
+  background: #03040d;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(100px, 15vw, 200px);
+  height: clamp(100px, 15vw, 200px);
+  transform: translate(-50%, -50%);
+  background: url("/textures/sun.webp") no-repeat center/cover;
+  border-radius: 50%;
+  box-shadow: 0 0 80px rgba(255, 200, 100, 0.8); /* glowing aura */
+  animation: spin 150s linear infinite; /* rotation */
 }
 
 .nebula {
@@ -144,14 +150,13 @@
   animation: drift 100s linear infinite;
 }
 
-/* Animations */
-@keyframes pulse {
-  0%,
-  100% {
-    background-size: 100% 100%;
+/* Rotation animation */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
   }
-  50% {
-    background-size: 105% 105%;
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 

@@ -4,6 +4,7 @@ import "./layout.css";
 export default function Layout() {
   return (
     <div className="sky-root text-white relative">
+      <div className="sun"></div>
       <div className="nebula"></div>
       {/* Star layers */}
       <div className="stars stars-1"></div>

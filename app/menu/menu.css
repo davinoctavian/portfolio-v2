@@ -10,7 +10,7 @@
 
 /* Orbits anchor to page center and spin */
 .orbit {
-  --r: 200px; /* default radius, overridden per planet */
+  --r: clamp(150px, 15vw, 200px); /* default radius, overridden per planet */
   --speed: 40s; /* default speed, overridden per planet */
 
   position: absolute;
@@ -45,8 +45,8 @@
 /* Circle visual */
 .planet-circle {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: clamp(20px, 4vw, 40px);
+  height: clamp(20px, 4vw, 40px);
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -65,49 +65,49 @@
 
 /* Speeds and radii per planet */
 .mercury {
-  --r: min(18vw, 180px);
+  --r: clamp(90px, 18vw, 180px);
   --speed: 36s;
 }
 .venus {
-  --r: min(21vw, 210px);
+  --r: clamp(105px, 21vw, 210px);
   --speed: 40s;
 }
 .earth {
-  --r: min(25vw, 250px);
+  --r: clamp(125px, 25vw, 250px);
   --speed: 44s;
 }
 .mars {
-  --r: min(29vw, 290px);
+  --r: clamp(145px, 29vw, 290px);
   --speed: 48s;
 }
 .jupiter {
-  --r: min(34vw, 340px);
+  --r: clamp(170px, 34vw, 340px);
   --speed: 54s;
 }
 
 /* Planet colors */
 .mercury .planet-circle {
   background-image: url("/textures/mercury.webp");
-  width: 20px;
-  height: 20px;
+  width: clamp(10px, 2vw, 20px);
+  height: clamp(10px, 2vw, 20px);
 }
 .venus .planet-circle {
   background-image: url("/textures/venus.webp");
-  width: 35px;
-  height: 35px;
+  width: clamp(18px, 3vw, 35px);
+  height: clamp(18px, 3vw, 35px);
 }
 .earth .planet-circle {
   background-image: url("/textures/earth.webp");
 }
 .mars .planet-circle {
   background-image: url("/textures/mars.webp");
-  width: 30px;
-  height: 30px;
+  width: clamp(15px, 3vw, 30px);
+  height: clamp(15px, 3vw, 30px);
 }
 .jupiter .planet-circle {
   background-image: url("/textures/jupiter.webp");
-  width: 70px;
-  height: 70px;
+  width: clamp(35px, 7vw, 70px);
+  height: clamp(35px, 7vw, 70px);
 }
 
 /* Spin animation (orbit rotation around center) */
@@ -127,5 +127,53 @@
   }
   to {
     transform: rotate(-360deg);
+  }
+}
+
+.warp-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+  animation: warpFade 1s forwards;
+}
+
+/* Each star streak */
+.warp-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 80px;
+  background: white;
+  opacity: 0.8;
+  transform-origin: center;
+  animation: warpStreak 0.8s ease-out forwards;
+}
+
+/* Fade out the whole effect */
+@keyframes warpFade {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Star streak animation */
+@keyframes warpStreak {
+  0% {
+    transform: rotate(var(--angle)) translateY(0px) scaleY(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) translateY(-600px) scaleY(1.5);
+    opacity: 0;
   }
 }
