@@ -1,29 +1,40 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
-import "./menu.css";
+import { Loading } from "../loading/loading";
 
 export function Menu() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent, link: string) => {
+    e.preventDefault(); // stop NavLink from navigating immediately
     setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
+
+    // wait for animation duration (e.g. 1s)
+    setTimeout(() => {
+      navigate(link);
+      // navigate programmatically
+    }, 1000);
   };
 
   return (
-    <nav className="solar-system">
+    <nav className="absolute inset-0 z-8 pointer-events-none">
       {resources.map(({ link, name, alias }) => {
         const animationDelay = Math.random() * 42;
         return (
           <div
             key={alias}
-            className={`orbit ${alias}`}
+            className={`orbit ${alias} absolute top-1/2 left-1/2`}
             style={{ animationDelay: `-${animationDelay}s` }}
           >
-            <NavLink to={link} className="planet" onClick={handleClick}>
-              <span className="planet-circle"></span>
+            <NavLink
+              to={link}
+              className="planet absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-auto"
+              onClick={(e) => handleClick(e, link)}
+            >
+              <span className="planet-circle block rounded-full bg-center bg-cover shadow-[0_0_8px_rgba(255,255,255,0.35)]"></span>
               <span
-                className="planet-label"
+                className="planet-label block mt-1 text-white text-xs whitespace-nowrap"
                 style={{ animationDelay: `-${animationDelay}s` }}
               >
                 {name}
@@ -32,20 +43,7 @@ export function Menu() {
           </div>
         );
       })}
-      {loading && (
-        <div className="warp-overlay">
-          {Array.from({ length: 80 }).map((_, i) => {
-            const angle = Math.floor(Math.random() * 360) + "deg";
-            return (
-              <div
-                key={i}
-                className="warp-star"
-                style={{ ["--angle" as any]: angle }}
-              />
-            );
-          })}
-        </div>
-      )}
+      {loading && <Loading />}
     </nav>
   );
 }

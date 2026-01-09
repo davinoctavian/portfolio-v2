@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { Loading } from "../loading/loading";
 import { useNavigate } from "react-router";
-import type { Route } from "./+types/about";
+import type { Route } from "./+types/project";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "About Davin Octavian" },
+    { title: "Project Davin Octavian" },
     {
       name: "description",
-      content: "This page contain about Davin Octavian",
+      content: "This page contain Davin Octavian Past Project",
     },
   ];
 }
 
-export default function About() {
+export default function Project() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ export default function About() {
       className="
         relative min-h-screen w-full m-0 p-10
         flex flex-col items-center justify-center
-        bg-[url('/textures/hd_venus.webp')] bg-cover bg-center menu-panel"
+        bg-[url('/textures/hd_mars.webp')] bg-cover bg-center menu-panel"
     >
       <div
         className="
@@ -40,8 +40,8 @@ export default function About() {
           shadow-inner shadow-cyan-300/30
         "
       >
-        ini isinya about
-        <p>about</p>
+        ini untuk porject
+        <p>project</p>
       </div>
       <div
         onClick={handleClick}

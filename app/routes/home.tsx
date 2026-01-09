@@ -6,7 +6,8 @@ export function meta({}: Route.MetaArgs) {
     { title: "Davin Octavian" },
     {
       name: "description",
-      content: "This is Portfolio Davin Octavian build with react router v7",
+      content:
+        "This is Portfolio Davin Octavian build with react router v7 plus tailwind",
     },
   ];
 }
