@@ -34,19 +34,21 @@ export default function Cv() {
       <div
         className="
           relative z-10 w-full h-full
-          bg-[rgba(25,36,37,0.41)]
+          bg-[rgba(25,36,37,0.54)]
           p-6 pb-10 rounded-xl
-          text-[#88fffe] text-center font-orbitron
-          shadow-inner shadow-cyan-300/30
+          text-[#88fffe] text-center
+          shadow-inner shadow-cyan-300/30 contents overflow-y-auto
         "
       >
-        ini untuk CV
-        <p>CV</p>
+        {/* PDF embedded */}
+        <iframe
+          src="/assets/documents/CV_Davin_Octavian.pdf"
+          className="w-full h-[600px] rounded-lg"
+        ></iframe>
       </div>
       <div
         onClick={handleClick}
         className="
-        font-orbitron
           relative z-20 -top-6
           text-center px-6 py-3 rounded-xl
           bg-[rgba(25,36,37,0.83)]

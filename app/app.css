@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans:
-    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Orbitron", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -366,7 +366,7 @@ body {
   }
   100% {
     transform: rotate(var(--angle)) translateY(-600px) scaleY(1.5);
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 
