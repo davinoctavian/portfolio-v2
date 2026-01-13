@@ -7,7 +7,7 @@ export default function Layout() {
       {/* Sun */}
       <div
         className="
-          sun absolute top-1/2 left-1/2
+          sun absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
           w-[clamp(100px,15vw,200px)] h-[clamp(100px,15vw,200px)]
           rounded-full
           bg-[url('/textures/sun.webp')] bg-cover bg-center
