@@ -43,7 +43,7 @@ export default function Profile() {
         "
       >
         <img
-          src="./assets/images/pasphoto.jpg"
+          src="./images/pasphoto.jpg"
           alt="profile"
           className="mx-auto mb-6 max-w-[150px] rounded-lg shadow-lg"
         />

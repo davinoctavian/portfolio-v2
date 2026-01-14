@@ -42,7 +42,7 @@ export default function Cv() {
       >
         {/* PDF embedded */}
         <iframe
-          src="/assets/documents/CV_Davin_Octavian.pdf"
+          src="/documents/CV_Davin_Octavian.pdf"
           className="w-full h-[600px] rounded-lg"
         ></iframe>
       </div>

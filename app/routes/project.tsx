@@ -12,6 +12,7 @@ import simpleReactCdn from "../assets/videos/simple-react-cdn.mp4";
 import shoeStoreAngular from "../assets/videos/shoeStore-angular-typescript.mp4";
 import listPokemonAngular from "../assets/videos/list-pokemon-angular.mp4";
 import molaTv from "../assets/videos/molatv.mp4";
+import VideoGalleryModal from "../components/VideoGalleryModal";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -26,8 +27,8 @@ export function meta({}: Route.MetaArgs) {
 export default function Project() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [isModal, setModal] = useState(false);
-  const [datas, setDatas] = useState<{ name: string; link: string }[]>([]);
+  const [isGalleryOpen, setGalleryOpen] = useState(false);
+  const [datas, setDatas] = useState<{ title: string; src: string }[]>([]);
 
   const handleClick = () => {
     setLoading(true);
@@ -243,30 +244,30 @@ export default function Project() {
   const handleGalleryClick = (param: string) => {
     if (param === "personal") {
       const dataImage = [
-        { name: "Simple React from CDN Link", link: simpleReactCdn },
-        { name: "CRUD React with Json Server", link: crudReactJsonServer },
+        { title: "Simple React from CDN Link", src: simpleReactCdn },
+        { title: "CRUD React with Json Server", src: crudReactJsonServer },
         {
-          name: "React Filter with Json Server",
-          link: shoeStoreReactJsonServer,
+          title: "React Filter with Json Server",
+          src: shoeStoreReactJsonServer,
         },
-        { name: "React Redux with Login", link: reactReduxWithLogin },
-        { name: "CRUD Angular", link: crudAngular },
-        { name: "NextJs Get Git Repository", link: nextjsGetGitRepo },
-        { name: "Angular-Typescript shoe store", link: shoeStoreAngular },
-        { name: "Angular List Pokemon", link: listPokemonAngular },
-        { name: "Animation with CSS", link: cssAnimation },
+        { title: "React Redux with Login", src: reactReduxWithLogin },
+        { title: "CRUD Angular", src: crudAngular },
+        { title: "NextJs Get Git Repository", src: nextjsGetGitRepo },
+        { title: "Angular-Typescript shoe store", src: shoeStoreAngular },
+        { title: "Angular List Pokemon", src: listPokemonAngular },
+        { title: "Animation with CSS", src: cssAnimation },
       ];
       setDatas(dataImage);
     }
     if (param === "mola") {
-      const dataImage = [{ name: "mola.tv", link: molaTv }];
+      const dataImage = [{ title: "mola.tv", src: molaTv }];
       setDatas(dataImage);
     }
-    setModal(true);
+    setGalleryOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setModal(false);
+  const handleCloseGallery = () => {
+    setGalleryOpen(false);
     setDatas([]);
   };
 
@@ -287,20 +288,7 @@ export default function Project() {
           overflow-y-auto
         "
       >
-        {/* <Modal show={isModal} handleClose={() => handleCloseModal()}> */}
-        {datas?.map((data, index) => {
-          return (
-            <fieldset key={index} className="mb-2">
-              <legend>{data.name}</legend>
-              <video width="100%" height="100%" controls>
-                <source src={data.link} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </fieldset>
-          );
-        })}
-        {/* </Modal> */}
-        <div className="space-y-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (
             <ProjectCard
               key={p.title}
@@ -309,6 +297,11 @@ export default function Project() {
             />
           ))}
         </div>
+        <VideoGalleryModal
+          isOpen={isGalleryOpen}
+          onClose={() => handleCloseGallery()}
+          videos={datas}
+        />
       </div>
       <div
         onClick={handleClick}
@@ -335,73 +328,106 @@ function ProjectCard({
   onGalleryClick: (param: string) => void;
 }) {
   return (
-    <div className="p-2 shadow-inner shadow-cyan-300/30 bg-[rgb(253,253,33)]">
-      <h3 className="text-[#000000]">{project.title}</h3>
-      <hr />
-      <div className="text-[#000000] text-left">
-        <p>
-          {project.description
-            ? project.description
-            : `This Project when I work on ${project.company}`}
-        </p>
-        <ol>
-          <li>
-            Programming Language
-            <ul>
-              {project.language.map((lang: string) => (
-                <li key={lang}>{lang}</li>
+    <div
+      className="
+        bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400
+        shadow-lg shadow-cyan-300/40
+        rounded-xl p-6 transition-transform transform hover:scale-[1.02]
+        hover:shadow-cyan-400/60
+      "
+    >
+      {/* Title */}
+      <h3 className="text-black text-2xl font-bold mb-2">{project.title}</h3>
+      <p className="text-gray-800 italic mb-4">
+        {project.description
+          ? project.description
+          : `This project when I worked at ${project.company}`}
+      </p>
+
+      {/* Divider */}
+      <hr className="border-t border-cyan-400 mb-4" />
+
+      {/* Content */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-black">
+        <div>
+          <h4 className="font-semibold text-cyan-700">Programming Languages</h4>
+          <ul className="list-disc list-inside">
+            {project.language.map((lang: string) => (
+              <li key={lang}>{lang}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-cyan-700">Tools</h4>
+          <ul className="list-disc list-inside">
+            {project.tools.map((tool: string) => (
+              <li key={tool}>{tool}</li>
+            ))}
+          </ul>
+        </div>
+
+        {project.tasks.length > 0 && (
+          <div className="sm:col-span-2">
+            <h4 className="font-semibold text-cyan-700">Tasks</h4>
+            <ul className="list-disc list-inside grid grid-cols-2 gap-x-6">
+              {project.tasks.map((task: string) => (
+                <li key={task}>{task}</li>
               ))}
             </ul>
-          </li>
-          <li>
-            Tools
-            <ul>
-              {project.tools.map((tool: string) => (
-                <li key={tool}>{tool}</li>
-              ))}
-            </ul>
-          </li>
-          {project.tasks.length > 0 && (
-            <li>
-              Tasks
-              <ul>
-                {project.tasks.map((task: string) => (
-                  <li key={task}>{task}</li>
-                ))}
-              </ul>
-            </li>
-          )}
-          <li>
-            Link
-            <ul>
-              {project.links ? (
-                project.links.map((link: any) =>
+          </div>
+        )}
+
+        <div className="sm:col-span-2">
+          <h4 className="font-semibold text-cyan-700">Links</h4>
+          <div className="flex flex-wrap gap-3 mt-2">
+            {project.links
+              ? project.links.map((link: any) =>
                   link.url ? (
-                    <li key={link.label}>
-                      <a href={link.url} target="_blank" rel="noreferrer">
-                        {link.label}
-                      </a>
-                    </li>
+                    <a
+                      key={link.label}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition"
+                    >
+                      {link.label}
+                    </a>
                   ) : (
-                    <li key={link.label}>{link.label}</li>
+                    <span
+                      key={link.label}
+                      className="px-3 py-1 rounded-lg bg-gray-300 text-gray-700 cursor-not-allowed"
+                    >
+                      {link.label}
+                    </span>
                   )
                 )
-              ) : (
-                <li>{project.link.label}</li>
-              )}
-              {project.gallery && (
-                <li>
-                  <button
-                    className="cursor-pointer bg-[#000000] text-[#ffffff] px-2 py-1 rounded"
-                    onClick={() => onGalleryClick(project.gallery)}
+              : project.link &&
+                (project.link.url ? (
+                  <a
+                    href={project.link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition"
                   >
-                    Gallery
-                  </button>
-                </li>
-              )}
-            </ul>
-          </li>
-        </ol>
+                    {project.link.label}
+                  </a>
+                ) : (
+                  <span className="px-3 py-1 rounded-lg bg-gray-300 text-gray-700 cursor-not-allowed">
+                    {project.link.label}
+                  </span>
+                ))}
+
+            {project.gallery && (
+              <button
+                className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition cursor-pointer"
+                onClick={() => onGalleryClick(project.gallery)}
+              >
+                Gallery
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
