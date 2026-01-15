@@ -7,7 +7,6 @@ export function Menu() {
   const [loading, setLoading] = useState(false);
 
   const handleClick = (e: React.MouseEvent, link: string) => {
-    e.preventDefault(); // stop NavLink from navigating immediately
     setLoading(true);
 
     // wait for animation duration (e.g. 1s)
@@ -30,7 +29,10 @@ export function Menu() {
             <NavLink
               to={link}
               className="planet absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-auto"
-              onClick={(e) => handleClick(e, link)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleClick(e, link);
+              }}
             >
               <span className="planet-circle block rounded-full bg-center bg-cover shadow-[0_0_8px_rgba(255,255,255,0.35)]"></span>
               <span
