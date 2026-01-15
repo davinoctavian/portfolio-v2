@@ -12,6 +12,7 @@ import "./app.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", type: "image/png", href: "/logo.png" },
+  { rel: "apple-touch-icon", type: "image/png", href: "/logo.png" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -30,6 +31,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:title" content="Davin Octavian Portfolio" />
+        <meta property="og:description" content="Frontend Engineer Portfolio" />
         <Meta />
         <Links />
       </head>
