@@ -52,6 +52,12 @@ export default function Cv() {
                 href="/documents/CV_Davin_Octavian.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="
+                  inline-block mt-2 px-4 py-2
+                  bg-cyan-600 hover:bg-cyan-700
+                  text-white font-semibold rounded-lg
+                  shadow-md transition-colors
+                "
               >
                 Download the CV
               </a>
