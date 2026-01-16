@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loading } from "../loading/loading";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types/cv";
@@ -24,14 +24,6 @@ export default function Cv() {
     }, 1000);
   };
 
-  const [pdfSupported, setPdfSupported] = useState(true);
-
-  useEffect(() => {
-    const embed = document.createElement("embed");
-    embed.type = "application/pdf";
-    setPdfSupported(embed.type === "application/pdf");
-  }, []);
-
   return (
     <div
       className="
@@ -49,25 +41,22 @@ export default function Cv() {
         "
       >
         <div className="w-full h-[600px] rounded-lg">
-          {pdfSupported ? (
-            <iframe
-              src="/documents/CV_Davin_Octavian.pdf"
-              className="w-full h-full rounded-lg"
-              style={{ border: "none" }}
-            ></iframe>
-          ) : (
-            <p className="text-center mt-4">
-              Your browser doesn’t support inline PDF viewing.{" "}
+          <object
+            data="/documents/CV_Davin_Octavian.pdf"
+            type="application/pdf"
+            style={{ width: "100%", height: "100%", border: "none" }}
+          >
+            <p>
+              Your browser may not support inline PDFs.{" "}
               <a
                 href="/documents/CV_Davin_Octavian.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline"
               >
-                Open CV
+                Download the CV
               </a>
             </p>
-          )}
+          </object>
         </div>
       </div>
       <div
