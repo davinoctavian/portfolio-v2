@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loading } from "../loading/loading";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types/cv";
@@ -24,6 +24,14 @@ export default function Cv() {
     }, 1000);
   };
 
+  const [pdfSupported, setPdfSupported] = useState(true);
+
+  useEffect(() => {
+    const embed = document.createElement("embed");
+    embed.type = "application/pdf";
+    setPdfSupported(embed.type === "application/pdf");
+  }, []);
+
   return (
     <div
       className="
@@ -37,14 +45,30 @@ export default function Cv() {
           bg-[rgba(25,36,37,0.54)]
           p-6 pb-10 rounded-xl
           text-[#88fffe] text-center
-          shadow-inner shadow-cyan-300/30 contents overflow-y-auto
+          shadow-inner shadow-cyan-300/30 contents overflow-auto
         "
       >
-        {/* PDF embedded */}
-        <iframe
-          src="/documents/CV_Davin_Octavian.pdf"
-          className="w-full h-[600px] rounded-lg"
-        ></iframe>
+        <div className="w-full h-[600px] rounded-lg">
+          {pdfSupported ? (
+            <iframe
+              src="/documents/CV_Davin_Octavian.pdf"
+              className="w-full h-full rounded-lg"
+              style={{ border: "none" }}
+            ></iframe>
+          ) : (
+            <p className="text-center mt-4">
+              Your browser doesn’t support inline PDF viewing.{" "}
+              <a
+                href="/documents/CV_Davin_Octavian.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                Open CV
+              </a>
+            </p>
+          )}
+        </div>
       </div>
       <div
         onClick={handleClick}
