@@ -13,6 +13,7 @@ import shoeStoreAngular from "../assets/videos/shoeStore-angular-typescript.mp4"
 import listPokemonAngular from "../assets/videos/list-pokemon-angular.mp4";
 import molaTv from "../assets/videos/molatv.mp4";
 import VideoGalleryModal from "../components/VideoGalleryModal";
+import reactVitePwaGameTtt from "../assets/videos/react-vite-pwa-game-ttt.mp4";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -256,6 +257,7 @@ export default function Project() {
         { title: "Angular-Typescript shoe store", src: shoeStoreAngular },
         { title: "Angular List Pokemon", src: listPokemonAngular },
         { title: "Animation with CSS", src: cssAnimation },
+        { title: "Tic Tac Toe React Vite PWA ", src: reactVitePwaGameTtt },
       ];
       setDatas(dataImage);
     }
@@ -400,7 +402,7 @@ function ProjectCard({
                     >
                       {link.label}
                     </span>
-                  )
+                  ),
                 )
               : project.link &&
                 (project.link.url ? (
