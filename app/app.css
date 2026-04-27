@@ -337,20 +337,23 @@ body {
 }
 
 /*Loading component*/
-@keyframes warpFade {
-  from {
+
+/* Phase "in": fade to black while streaks shoot out */
+@keyframes warpIn {
+  0% {
+    opacity: 0;
+  }
+  15% {
     opacity: 1;
   }
-  to {
-    opacity: 0;
+  100% {
+    opacity: 1;
   }
 }
 
-@keyframes warpFade {
+/* Phase "out": black fades away revealing the ready new page */
+@keyframes warpOut {
   0% {
-    opacity: 1;
-  }
-  80% {
     opacity: 1;
   }
   100% {
@@ -358,6 +361,7 @@ body {
   }
 }
 
+/* Streaks: shoot outward during the "in" phase */
 @keyframes warpStreak {
   0% {
     transform: rotate(var(--angle)) translateY(0px) scaleY(0.2);
@@ -365,14 +369,28 @@ body {
   }
   100% {
     transform: rotate(var(--angle)) translateY(-600px) scaleY(1.5);
-    opacity: 0.2;
+    opacity: 0;
   }
 }
 
-.animate-warpFade {
-  animation: warpFade 1.5s forwards;
+/* Promote orbiting planets to their own compositor layers so the GPU   */
+/* handles the rotation without involving the main thread on every tick. */
+.orbit {
+  will-change: transform;
+  /* contain:layout tells the browser these elements don't affect siblings */
+  contain: layout style;
 }
 
-.animate-warpStreak {
-  animation: warpStreak 1.2s ease-out forwards;
+.planet-label {
+  will-change: transform;
+}
+
+/* The sun also rotates — promote it too */
+.sun {
+  will-change: transform;
+}
+
+/* Nebula drifts slowly — a single compositor layer is enough */
+.nebula {
+  will-change: transform;
 }

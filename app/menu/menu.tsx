@@ -1,33 +1,65 @@
-import { NavLink, useNavigate } from "react-router";
-import { useState } from "react";
+import { NavLink, useNavigate, useNavigation } from "react-router";
+import { useState, useEffect, useRef } from "react";
 import { Loading } from "../loading/loading";
+
+const resources = [
+  { link: "/profile", name: "Profile", alias: "mercury" },
+  { link: "/about", name: "About", alias: "venus" },
+  { link: "/", name: "Home", alias: "earth" },
+  { link: "/project", name: "Project", alias: "mars" },
+  { link: "/cv", name: "CV", alias: "jupiter" },
+] as const;
+
+const ANIMATION_DELAYS = resources.map((_, i) => `${-(i * 8.4).toFixed(1)}s`);
+
+type OverlayPhase = "in" | "waiting" | "out" | "done";
 
 export function Menu() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  const [phase, setPhase] = useState<OverlayPhase>("done");
+  const pendingLink = useRef<string | null>(null);
 
-  const handleClick = (e: React.MouseEvent, link: string) => {
-    setLoading(true);
+  const handleClick = (_e: React.MouseEvent, link: string) => {
+    if (phase !== "done") return; // prevent double-click
+    pendingLink.current = link;
+    setPhase("in");
+  };
 
-    // wait for animation duration (e.g. 1s)
-    setTimeout(() => {
-      navigate(link);
-      // navigate programmatically
-    }, 1000);
+  // When "in" animation finishes → actually navigate
+  const handleInDone = () => {
+    setPhase("waiting");
+    if (pendingLink.current) {
+      navigate(pendingLink.current);
+    }
+  };
+
+  // Watch React Router's navigation state.
+  // When the new page is fully loaded (idle), start the "out" fade.
+  useEffect(() => {
+    if (phase === "waiting" && navigation.state === "idle") {
+      setPhase("out");
+    }
+  }, [navigation.state, phase]);
+
+  const handleOutDone = () => {
+    setPhase("done");
+    pendingLink.current = null;
   };
 
   return (
     <nav className="absolute inset-0 z-8 pointer-events-none">
-      {resources.map(({ link, name, alias }) => {
-        const animationDelay = Math.random() * 42;
+      {resources.map(({ link, name, alias }, i) => {
+        const delay = ANIMATION_DELAYS[i];
         return (
           <div
             key={alias}
             className={`orbit ${alias} absolute top-1/2 left-1/2`}
-            style={{ animationDelay: `-${animationDelay}s` }}
+            style={{ animationDelay: delay }}
           >
             <NavLink
               to={link}
+              prefetch="intent"
               className="planet absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-auto"
               onClick={(e) => {
                 e.preventDefault();
@@ -37,7 +69,7 @@ export function Menu() {
               <span className="planet-circle block rounded-full bg-center bg-cover shadow-[0_0_8px_rgba(255,255,255,0.35)]"></span>
               <span
                 className="planet-label block mt-1 text-white text-xs whitespace-nowrap"
-                style={{ animationDelay: `-${animationDelay}s` }}
+                style={{ animationDelay: delay }}
               >
                 {name}
               </span>
@@ -45,35 +77,14 @@ export function Menu() {
           </div>
         );
       })}
-      {loading && <Loading />}
+
+      {phase !== "done" && (
+        <Loading
+          phase={phase === "in" ? "in" : "out"}
+          onInDone={handleInDone}
+          onOutDone={handleOutDone}
+        />
+      )}
     </nav>
   );
 }
-
-const resources = [
-  {
-    link: "/profile",
-    name: "Profile",
-    alias: "mercury",
-  },
-  {
-    link: "/about",
-    name: "About",
-    alias: "venus",
-  },
-  {
-    link: "/",
-    name: "Home",
-    alias: "earth",
-  },
-  {
-    link: "/project",
-    name: "Project",
-    alias: "mars",
-  },
-  {
-    link: "/cv",
-    name: "CV",
-    alias: "jupiter",
-  },
-];

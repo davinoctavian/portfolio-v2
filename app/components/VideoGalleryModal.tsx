@@ -25,6 +25,7 @@ export default function VideoGalleryModal({
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-black hover:text-red-600 text-2xl font-bold cursor-pointer"
+          aria-label="Close gallery"
         >
           ✕
         </button>
@@ -43,6 +44,7 @@ export default function VideoGalleryModal({
                 <video
                   src={video.src}
                   controls
+                  preload="none"
                   className="w-full rounded-lg shadow-md"
                 />
               </div>
