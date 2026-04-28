@@ -5,11 +5,8 @@ import VideoGalleryModal from "../components/VideoGalleryModal";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Project Davin Octavian" },
-    {
-      name: "description",
-      content: "This page contain Davin Octavian Past Project",
-    },
+    { title: "Projects · Davin Octavian" },
+    { name: "description", content: "Projects by Davin Octavian" },
   ];
 }
 
@@ -30,48 +27,54 @@ import pulseReminderViteCapacitor from "../assets/videos/pulse-reminder-vite-cap
 
 const GALLERIES: Record<string, { title: string; src: string }[]> = {
   personal: [
-    { title: "Simple React from CDN Link", src: simpleReactCdn },
-    { title: "CRUD React with Json Server", src: crudReactJsonServer },
-    { title: "React Filter with Json Server", src: shoeStoreReactJsonServer },
+    { title: "Simple React from CDN", src: simpleReactCdn },
+    { title: "CRUD React + Json Server", src: crudReactJsonServer },
+    { title: "Shoe Store React", src: shoeStoreReactJsonServer },
     { title: "React Redux with Login", src: reactReduxWithLogin },
     { title: "CRUD Angular", src: crudAngular },
-    { title: "NextJs Get Git Repository", src: nextjsGetGitRepo },
-    { title: "Angular-Typescript shoe store", src: shoeStoreAngular },
-    { title: "Angular List Pokemon", src: listPokemonAngular },
-    { title: "Animation with CSS", src: cssAnimation },
-    { title: "Tic Tac Toe React Vite PWA", src: reactVitePwaGameTtt },
+    { title: "Next.js Get Git Repo", src: nextjsGetGitRepo },
+    { title: "Shoe Store Angular", src: shoeStoreAngular },
+    { title: "Angular List Pokémon", src: listPokemonAngular },
+    { title: "CSS Animations", src: cssAnimation },
+    { title: "Tic Tac Toe PWA", src: reactVitePwaGameTtt },
     {
-      title: "Internet Package Vite Json Server",
+      title: "Internet Package Vite + Json Server",
       src: internetPackageViteJsonServer,
     },
-    { title: "Task Manager Vite PWA", src: taskManagerVitePwa },
-    { title: "Pulse Reminder Vite Capacitor", src: pulseReminderViteCapacitor },
+    { title: "Task Manager PWA", src: taskManagerVitePwa },
+    { title: "Pulse Reminder + Capacitor", src: pulseReminderViteCapacitor },
   ],
   mola: [{ title: "mola.tv", src: molaTv }],
 };
 
-const projects = [
+type LinkDef = { url: string; label: string };
+type Project = {
+  title: string;
+  company: string;
+  description?: string;
+  language: string[];
+  tools: string[];
+  tasks?: string[];
+  link?: LinkDef;
+  links?: LinkDef[];
+  gallery?: string;
+};
+
+const projects: Project[] = [
   {
     title: "Personal Project",
     company: "Self‑Learning",
-    description: "Mini projects I created to learn programming languages",
-    language: ["React", "Angular", "Vue", "Next", "TypeScript"],
-    tools: [
-      "Visual Studio",
-      "Visual Studio Code",
-      "SQL Server Management Studio",
-      "Gitlab",
-      "Github",
-    ],
-    tasks: [],
+    description: "Mini projects built to explore frameworks and languages.",
+    language: ["React", "Angular", "Vue", "Next.js", "TypeScript"],
+    tools: ["VS Code", "VS", "SSMS", "GitLab", "GitHub"],
     links: [
       {
         url: "https://gitlab.com/users/davinoctavian/projects",
-        label: "Gitlab",
+        label: "GitLab",
       },
       {
         url: "https://github.com/davinoctavian?tab=repositories",
-        label: "Github",
+        label: "GitHub",
       },
     ],
     gallery: "personal",
@@ -81,169 +84,121 @@ const projects = [
     company: "Ide Inovasi Nusantara",
     language: ["Angular 14"],
     tools: [
-      "Visual Studio Code",
-      "Github",
+      "VS Code",
+      "GitHub",
       "Slack",
       "Jira",
       "Figma",
       "BitBucket",
       "Asana",
     ],
-    tasks: ["Add New Feature", "Fixing", "Enhance", "Testing"],
-    link: { url: "https://portal.ideku.io", label: "Ideku Portal" },
+    tasks: ["New Feature", "Bug Fix", "Enhance", "Testing"],
+    link: { url: "https://portal.ideku.io", label: "Visit" },
   },
   {
     title: "Portal",
     company: "Usaha Kreatif Indonesia",
-    language: ["Angular with Devextreme"],
-    tools: [
-      "Visual Studio Code",
-      "Github",
-      "Discord",
-      "Jira",
-      "Figma",
-      "Lambda Test",
-      "Amazon AWS",
-      "Vercel",
-    ],
-    tasks: [
-      "Initialize Project",
-      "Add New Feature",
-      "Fixing",
-      "Enhance",
-      "Testing",
-      "Deploy",
-    ],
-    link: { url: "https://portal.bitzaro.com/", label: "Portal" },
+    language: ["Angular + Devextreme"],
+    tools: ["VS Code", "GitHub", "Discord", "Jira", "Figma", "AWS", "Vercel"],
+    tasks: ["Init", "New Feature", "Bug Fix", "Enhance", "Deploy"],
+    link: { url: "https://portal.bitzaro.com/", label: "Visit" },
   },
   {
     title: "Onramp",
     company: "Usaha Kreatif Indonesia",
     language: ["Angular"],
-    tools: [
-      "Visual Studio Code",
-      "Github",
-      "Discord",
-      "Jira",
-      "Figma",
-      "Lambda Test",
-      "Amazon AWS",
-      "Vercel",
-    ],
-    tasks: [
-      "Initialize Project",
-      "Add New Feature",
-      "Fixing",
-      "Enhance",
-      "Testing",
-      "Deploy",
-    ],
-    link: { url: "https://onramp.bitzaro.com/", label: "Onramp" },
+    tools: ["VS Code", "GitHub", "Discord", "Jira", "Figma", "AWS", "Vercel"],
+    tasks: ["Init", "New Feature", "Bug Fix", "Deploy"],
+    link: { url: "https://onramp.bitzaro.com/", label: "Visit" },
   },
   {
     title: "Offramp",
     company: "Usaha Kreatif Indonesia",
     language: ["Angular"],
-    tools: [
-      "Visual Studio Code",
-      "Github",
-      "Discord",
-      "Jira",
-      "Figma",
-      "Lambda Test",
-      "Amazon AWS",
-      "Vercel",
-    ],
-    tasks: [
-      "Initialize Project",
-      "Add New Feature",
-      "Fixing",
-      "Enhance",
-      "Testing",
-      "Deploy",
-    ],
-    link: { url: "https://offramp.bitzaro.com/", label: "Offramp" },
+    tools: ["VS Code", "GitHub", "Discord", "Jira", "Figma", "AWS", "Vercel"],
+    tasks: ["Init", "New Feature", "Bug Fix", "Deploy"],
+    link: { url: "https://offramp.bitzaro.com/", label: "Visit" },
   },
   {
-    title: "Mola.tv",
+    title: "mola.tv",
     company: "Global Media Visual",
     language: ["React"],
-    tools: ["Visual Studio Code", "Gitlab", "Slack", "Wrike", "Jira", "Figma"],
-    tasks: ["Add New Feature", "Fixing", "Enhance", "Testing"],
-    link: { url: "https://mola.tv/", label: "Mola" },
+    tools: ["VS Code", "GitLab", "Slack", "Wrike", "Jira", "Figma"],
+    tasks: ["New Feature", "Bug Fix", "Enhance", "Testing"],
+    link: { url: "https://mola.tv/", label: "Visit" },
     gallery: "mola",
   },
   {
     title: "Mega Monitoring",
     company: "Qwerty Aplikasi Inovasi",
     language: ["React"],
-    tools: ["Visual Studio Code", "Gitlab", "Team City"],
-    tasks: ["Make from scratch", "Fixing", "Testing", "Deploy"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["VS Code", "GitLab", "TeamCity"],
+    tasks: ["From Scratch", "Bug Fix", "Testing", "Deploy"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "Qontact Agent",
     company: "Qwerty Aplikasi Inovasi",
     language: ["Angular"],
-    tools: ["Visual Studio Code", "Gitlab", "Team City"],
-    tasks: ["Make from scratch", "Fixing", "Testing", "Deploy"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["VS Code", "GitLab", "TeamCity"],
+    tasks: ["From Scratch", "Bug Fix", "Testing", "Deploy"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "Qontact CRM",
     company: "Qwerty Aplikasi Inovasi",
     language: ["Angular"],
-    tools: ["Visual Studio Code", "Gitlab", "Team City"],
-    tasks: ["Add New Feature", "Enhance", "Fixing", "Testing", "Deploy"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["VS Code", "GitLab", "TeamCity"],
+    tasks: ["New Feature", "Enhance", "Bug Fix", "Deploy"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "DMS",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Design Workflow", "Make Master Menu"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["Workflow Design", "Master Menu"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "External Contractor",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Add New Feature", "Enhance", "Fixing", "Testing"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["New Feature", "Enhance", "Bug Fix"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "SLIK",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Add New Feature", "Enhance", "Fixing", "Testing"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["New Feature", "Enhance", "Bug Fix"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "Insurance Claim",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Add New Feature", "Enhance", "Fixing", "Testing"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["New Feature", "Enhance", "Bug Fix"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "Bridging",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Enhance", "Fixing", "Testing"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["Enhance", "Bug Fix"],
+    link: { url: "", label: "No Access" },
   },
   {
     title: "Starbridge",
     company: "Indocyber Global Teknologi",
     language: ["C#"],
-    tools: ["Visual Studio", "SQL Server Management Studio"],
-    tasks: ["Add New Feature", "Learning"],
-    link: { url: "", label: "Didn't Have Access Anymore" },
+    tools: ["Visual Studio", "SQL Server"],
+    tasks: ["New Feature", "Learning"],
+    link: { url: "", label: "No Access" },
   },
 ];
 
@@ -261,14 +216,13 @@ export default function Project() {
     }
   };
 
-  const handleCloseGallery = () => {
-    setGalleryOpen(false);
-    setGalleryVideos([]);
-  };
-
   return (
-    <PageShell className="bg-[url('/textures/hd_mars.webp')] bg-cover bg-center">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <PageShell
+      bgClass="bg-[url('/textures/hd_mars.webp')] bg-cover bg-center"
+      title="Mars · Projects"
+      hideBack={isGalleryOpen}
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((p) => (
           <ProjectCard
             key={p.title}
@@ -280,120 +234,128 @@ export default function Project() {
 
       <VideoGalleryModal
         isOpen={isGalleryOpen}
-        onClose={handleCloseGallery}
+        onClose={() => {
+          setGalleryOpen(false);
+          setGalleryVideos([]);
+        }}
         videos={galleryVideos}
       />
     </PageShell>
   );
 }
 
-type Project = (typeof projects)[number];
-
 function ProjectCard({
   project,
   onGalleryClick,
 }: {
-  project: any;
-  onGalleryClick: (key: string) => void;
+  project: Project;
+  onGalleryClick: (k: string) => void;
 }) {
+  const allLinks: (
+    | { type: "link"; data: LinkDef }
+    | { type: "gallery"; key: string }
+  )[] = [];
+  if (project.links)
+    project.links.forEach((l) => allLinks.push({ type: "link", data: l }));
+  else if (project.link) allLinks.push({ type: "link", data: project.link });
+  if (project.gallery) allLinks.push({ type: "gallery", key: project.gallery });
+
   return (
-    <div
-      className="
-        bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400
-        shadow-lg shadow-cyan-300/40
-        rounded-xl p-6 transition-transform transform hover:scale-[1.02]
-        hover:shadow-cyan-400/60
-      "
-    >
-      <h3 className="text-black text-2xl font-bold mb-2">{project.title}</h3>
-      <p className="text-gray-800 italic mb-4">
-        {project.description
-          ? project.description
-          : `This project when I worked at ${project.company}`}
-      </p>
-
-      <hr className="border-t border-cyan-400 mb-4" />
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-black">
-        <div>
-          <h4 className="font-semibold text-cyan-700">Programming Languages</h4>
-          <ul className="list-disc list-inside">
-            {project.language.map((lang: string) => (
-              <li key={lang}>{lang}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-semibold text-cyan-700">Tools</h4>
-          <ul className="list-disc list-inside">
-            {project.tools.map((tool: string) => (
-              <li key={tool}>{tool}</li>
-            ))}
-          </ul>
-        </div>
-
-        {project.tasks && project.tasks.length > 0 && (
-          <div className="sm:col-span-2">
-            <h4 className="font-semibold text-cyan-700">Tasks</h4>
-            <ul className="list-disc list-inside grid grid-cols-2 gap-x-6">
-              {project.tasks.map((task: string) => (
-                <li key={task}>{task}</li>
-              ))}
-            </ul>
-          </div>
+    <div className="project-card p-5 flex flex-col gap-4">
+      <div>
+        <p className="project-card-company">{project.company}</p>
+        <h3 className="project-card-title mt-0.5">{project.title}</h3>
+        {project.description && (
+          <p className="text-[rgba(255,255,255,.45)] text-xs mt-1.5 leading-relaxed">
+            {project.description}
+          </p>
         )}
+      </div>
 
-        <div className="sm:col-span-2">
-          <h4 className="font-semibold text-cyan-700">Links</h4>
-          <div className="flex flex-wrap gap-3 mt-2">
-            {project.links
-              ? project.links.map((link: any) =>
-                  link.url ? (
-                    <a
-                      key={link.label}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <span
-                      key={link.label}
-                      className="px-3 py-1 rounded-lg bg-gray-300 text-gray-700 cursor-not-allowed"
-                    >
-                      {link.label}
-                    </span>
-                  ),
-                )
-              : project.link &&
-                (project.link.url ? (
-                  <a
-                    href={project.link.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition"
-                  >
-                    {project.link.label}
-                  </a>
-                ) : (
-                  <span className="px-3 py-1 rounded-lg bg-gray-300 text-gray-700 cursor-not-allowed">
-                    {project.link.label}
-                  </span>
-                ))}
+      <div className="flex flex-wrap gap-1.5">
+        {project.language.map((l) => (
+          <span key={l} className="tag">
+            {l}
+          </span>
+        ))}
+      </div>
 
-            {project.gallery && (
-              <button
-                className="px-3 py-1 rounded-lg bg-black text-yellow-300 hover:bg-cyan-700 hover:text-white transition cursor-pointer"
-                onClick={() => onGalleryClick(project.gallery)}
-              >
-                Gallery
-              </button>
-            )}
-          </div>
+      {project.tasks && project.tasks.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {project.tasks.map((t) => (
+            <span
+              key={t}
+              className="text-[10px] px-2 py-0.5 rounded-full border border-[rgba(255,255,255,.1)] text-[rgba(255,255,255,.4)]"
+            >
+              {t}
+            </span>
+          ))}
         </div>
+      )}
+
+      <div className="flex-1" />
+
+      <div className="flex flex-wrap gap-2 pt-2 border-t border-[rgba(0,240,255,.08)]">
+        {allLinks.map((item, i) => {
+          if (item.type === "gallery") {
+            return (
+              <button
+                key="gallery"
+                className="project-link"
+                onClick={() => onGalleryClick(item.key)}
+              >
+                <svg
+                  className="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                Videos
+              </button>
+            );
+          }
+          const { url, label } = item.data;
+          return url ? (
+            <a
+              key={i}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="project-link"
+            >
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+              {label}
+            </a>
+          ) : (
+            <span key={i} className="project-link disabled">
+              {label}
+            </span>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 
 type VideoGalleryModalProps = {
   isOpen: boolean;
@@ -11,41 +11,51 @@ export default function VideoGalleryModal({
   onClose,
   videos,
 }: VideoGalleryModalProps) {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-      <div
-        className="
-          bg-white rounded-lg shadow-lg max-w-5xl w-full h-[80vh]
-          flex flex-col relative text-black
-        "
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-black hover:text-red-600 text-2xl font-bold cursor-pointer"
-          aria-label="Close gallery"
+    <div
+      className="fixed inset-0 z-[200]"
+      style={{ background: "rgba(3,4,13,.92)", backdropFilter: "blur(14px)" }}
+    >
+      <div className="flex flex-col h-full w-full">
+        <div
+          className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-[rgba(0,240,255,.12)]"
+          style={{ background: "rgba(5,18,30,.98)" }}
         >
-          ✕
-        </button>
+          <p className="section-title text-sm">Project Videos</p>
+          <button onClick={onClose} className="close-btn" aria-label="Close">
+            <svg viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+            Close
+          </button>
+        </div>
 
-        {/* Header */}
-        <h2 className="text-2xl font-bold mb-4 text-center pt-4">
-          Project Gallery
-        </h2>
-
-        {/* Scrollable content */}
-        <div className="overflow-y-auto px-6 pb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="h-[calc(100vh-80px)] min-h-0 overflow-y-auto p-4 sm:p-6">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5">
             {videos.map((video) => (
-              <div key={video.title} className="flex flex-col items-center">
-                <h3 className="text-lg font-semibold mb-2">{video.title}</h3>
+              <div key={video.title} className="flex flex-col gap-2">
+                <p className="text-[rgba(255,255,255,.7)] text-xs tracking-wide font-semibold uppercase">
+                  {video.title}
+                </p>
                 <video
                   src={video.src}
                   controls
                   preload="none"
-                  className="w-full rounded-lg shadow-md"
+                  className="w-full rounded-xl"
+                  style={{ border: "1px solid rgba(0,240,255,.12)" }}
                 />
               </div>
             ))}

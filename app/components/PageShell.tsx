@@ -4,12 +4,19 @@ import { Loading } from "../loading/loading";
 
 type PageShellProps = {
   children: React.ReactNode;
-  className?: string;
+  bgClass?: string;
+  title?: string;
+  hideBack?: boolean;
 };
 
 type OverlayPhase = "in" | "waiting" | "out" | "done";
 
-export function PageShell({ children, className = "" }: PageShellProps) {
+export function PageShell({
+  children,
+  bgClass = "",
+  title,
+  hideBack = false,
+}: PageShellProps) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const [phase, setPhase] = useState<OverlayPhase>("done");
@@ -25,45 +32,43 @@ export function PageShell({ children, className = "" }: PageShellProps) {
   };
 
   useEffect(() => {
-    if (phase === "waiting" && navigation.state === "idle") {
-      setPhase("out");
-    }
+    if (phase === "waiting" && navigation.state === "idle") setPhase("out");
   }, [navigation.state, phase]);
 
   const handleOutDone = () => setPhase("done");
 
   return (
     <div
-      className={`
-        relative min-h-screen w-full m-0 p-10
-        flex flex-col items-center justify-center
-        menu-panel ${className}
-      `}
+      className={`relative min-h-screen w-full flex flex-col items-center justify-start ${bgClass}`}
     >
-      <div
-        className="
-          relative z-10 w-full h-full
-          bg-[rgba(25,36,37,0.54)]
-          p-6 pb-10 rounded-xl
-          text-[#88fffe] text-center
-          shadow-inner shadow-cyan-300/30
-          overflow-y-auto
-        "
-      >
-        {children}
-      </div>
+      {bgClass && (
+        <div className="absolute inset-0 bg-[#03040d]/60 pointer-events-none" />
+      )}
 
-      <div
-        onClick={handleClose}
-        className="
-          relative z-20 -top-6
-          text-center px-6 py-3 rounded-xl
-          bg-[rgba(25,36,37,0.83)]
-          shadow-inner shadow-cyan-300/30
-          cursor-pointer select-none
-        "
-      >
-        Close
+      {/* Back button — hidden when a modal is open on top */}
+      {!hideBack && (
+        <div className="fixed top-5 right-6 z-30">
+          <button onClick={handleClose} className="close-btn">
+            <svg viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Back</span>
+          </button>
+        </div>
+      )}
+
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 py-16 page-enter">
+        {title && (
+          <div className="mb-8 text-center">
+            <p className="section-title">{title}</p>
+            <div className="mt-2 mx-auto w-16 h-px bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-60" />
+          </div>
+        )}
+        {children}
       </div>
 
       {phase !== "done" && (
