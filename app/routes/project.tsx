@@ -24,6 +24,7 @@ import reactVitePwaGameTtt from "../assets/videos/react-vite-pwa-game-ttt.mp4?ur
 import internetPackageViteJsonServer from "../assets/videos/internet-package-vite-json-server.mp4?url";
 import taskManagerVitePwa from "../assets/videos/task-manager-vite-pwa.mp4?url";
 import pulseReminderViteCapacitor from "../assets/videos/pulse-reminder-vite-capacitor.mp4?url";
+import nextExpenseTracking from "../assets/videos/next-expense-tracking.mp4?url";
 
 const GALLERIES: Record<string, { title: string; src: string }[]> = {
   personal: [
@@ -43,6 +44,7 @@ const GALLERIES: Record<string, { title: string; src: string }[]> = {
     },
     { title: "Task Manager PWA", src: taskManagerVitePwa },
     { title: "Pulse Reminder + Capacitor", src: pulseReminderViteCapacitor },
+    { title: "Next.js Expense Tracking", src: nextExpenseTracking },
   ],
   mola: [{ title: "mola.tv", src: molaTv }],
 };

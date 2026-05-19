@@ -28,7 +28,6 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap",
   },
-  { rel: "preload", as: "image", href: "/textures/sun.webp" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

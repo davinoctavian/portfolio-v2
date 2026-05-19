@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 type VideoGalleryModalProps = {
   isOpen: boolean;
@@ -11,8 +12,15 @@ export default function VideoGalleryModal({
   onClose,
   videos,
 }: VideoGalleryModalProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -20,12 +28,27 @@ export default function VideoGalleryModal({
 
   if (!isOpen) return null;
 
-  return (
+  // Portal renders directly into document.body — completely outside any
+  // parent stacking context (PageShell, layout divs, etc.) so z-index
+  // is guaranteed to be on top of everything.
+  return createPortal(
     <div
-      className="fixed inset-0 z-[200]"
-      style={{ background: "rgba(3,4,13,.92)", backdropFilter: "blur(14px)" }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        background: "rgba(3,4,13,.92)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+      }}
     >
-      <div className="flex flex-col h-full w-full">
+      <div
+        style={{ display: "flex", flexDirection: "column", height: "100dvh" }}
+      >
+        {/* Header */}
         <div
           className="flex-shrink-0 flex items-center justify-between px-5 py-4 border-b border-[rgba(0,240,255,.12)]"
           style={{ background: "rgba(5,18,30,.98)" }}
@@ -43,7 +66,12 @@ export default function VideoGalleryModal({
           </button>
         </div>
 
-        <div className="h-[calc(100vh-80px)] min-h-0 overflow-y-auto p-4 sm:p-6">
+        {/* Scrollable body */}
+        <div
+          ref={scrollRef}
+          className="overflow-y-auto p-4 sm:p-6"
+          style={{ height: "calc(100dvh - 65px)" }}
+        >
           <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5">
             {videos.map((video) => (
               <div key={video.title} className="flex flex-col gap-2">
@@ -62,6 +90,7 @@ export default function VideoGalleryModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
